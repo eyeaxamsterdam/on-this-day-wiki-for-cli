@@ -9,23 +9,17 @@ const termWidth = process.stdout.columns || 80;
 const pageSize = Math.max(Math.floor((process.stdout.rows || 24) * 0.8), 10);
 
 const args = process.argv.slice(2);
-let filterSection;
+const filterOptions = {
+  '-births': 'births',  
+  '-deaths': 'deaths',
+  '-events': 'events',
+  '-holidays': 'holidays',
+  '-selected': 'selected'
+};
 
-if (args.includes('-births')) {
-  filterSection = 'births';  
-}
-
-if (args.includes('-deaths')) {
-  filterSection = 'deaths';
-}
-if (args.includes('-events')) {
-  filterSection = 'events';
-}
-if (args.includes('-holidays')) {
-  filterSection = 'holidays';
-}
-if (args.includes('-selected')) {
-  filterSection = 'selected';
+let filterSection = Object.keys(filterOptions).find(option => args.includes(option));
+if (filterSection) {
+    filterSection = filterOptions[filterSection];
 }
 
 function capitalizeFirstLetter(str) {
