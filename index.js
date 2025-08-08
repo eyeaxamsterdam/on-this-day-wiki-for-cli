@@ -5,7 +5,7 @@ import inquirer from 'inquirer';
 import open from 'open';
 import wrapAnsi from 'wrap-ansi';
 
-const width = process.stdout.columns || 80;
+const termWidth = process.stdout.columns || 80;
 const pageSize = Math.max(Math.floor((process.stdout.rows || 24) * 0.8), 10);
 
 const args = process.argv.slice(2);
@@ -109,8 +109,8 @@ function fetchOnThisDayData() {
 
 function handleSelectedCatagory(sectionData) {
   const selectedItems = sectionData.map((event) => {
-    const year = `${event.year} : ` || '';
-    const text = event.text || 'Details not available';
+    const year = event.year ? `${event.year} : ` : '';
+    const text = event.text.replace(/\n/g, ' ');
     return {
       name: `${year}${text}\n`,
       value: event
@@ -155,7 +155,7 @@ function handleAllCatagories(parsedData) {
 
 function handleSelectedEvent(event) {
   const result = findMostRelevantUrl(event);
-  const extract = wrapAnsi(result.extract, width);
+  const extract = wrapAnsi(result.extract, termWidth);
   console.log(extract + '\n'); // Optionally display the extract
 
   // Build an array for inquirer choices
