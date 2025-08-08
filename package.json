@@ -1,0 +1,13 @@
+{
+  "name": "otdih",
+  "version": "1.0.0",
+  "bin": {
+    "otdih": "./index.js"
+  },
+  "dependencies": {
+    "inquirer": "^12.9.0",
+    "open": "^10.2.0",
+    "wrap-ansi": "^9.0.0"
+  },
+  "type": "module"
+}
