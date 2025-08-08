@@ -73,7 +73,7 @@ function fetchOnThisDayData() {
         }
       ]).then((eventAnswer) => {
         // Handle the selected event
-        console.log(wrapAnsi(eventAnswer.event.pages[0].extract,width));
+        console.log(wrapAnsi(eventAnswer.event.pages[0].extract,width) + '\n');
         console.log(eventAnswer.event.pages[0].content_urls.desktop.page);
         });
         });
