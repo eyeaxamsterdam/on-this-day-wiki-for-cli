@@ -17,12 +17,7 @@ function promptUser(questions) {
     });
 }
 
-/* process.on('SIGINT', () => {
-  console.log('\nGoodbye!');
-  process.exit(0);
-}); */
-
-function handleSelectedCatagory(sectionData) {
+function handleSelectedCategory(sectionData, date) {
   const selectedItems = sectionData.map(event => ({
     name: `${event.year ? event.year + ':' : ''} ${event.text.replace(/\n/g, ' ')}\n`,
     value: event
@@ -31,7 +26,7 @@ function handleSelectedCatagory(sectionData) {
   const questions = [{
     type: 'list',
     name: 'event',
-    message: 'Select an event:\n',
+    message: '  ' + date + '\n    Select an event:\n\n',
     choices: selectedItems,
     pageSize: pageSize,
     loop: false
@@ -40,7 +35,9 @@ function handleSelectedCatagory(sectionData) {
   promptUser(questions).then(answer => handleSelectedEvent(answer.event));
 }
 
-function handleAllCatagories(parsedData) {
+function handleAllCategories(parsedData, date, isToday) {
+  let categoryMessage;
+  isToday ? categoryMessage = '  On This Day In History - ' : categoryMessage = '  On Another Day In History - ';
   const choices = Object.keys(parsedData)
     .filter(key => Array.isArray(parsedData[key]))
     .map(section => ({
@@ -51,7 +48,7 @@ function handleAllCatagories(parsedData) {
   const questions = [{
     type: 'list',
     name: 'section',
-    message: 'Select a catagory:\n',
+    message: categoryMessage + date + '\n    Select a category:\n\n',
     choices: choices,
     pageSize: pageSize,
     loop: false
@@ -59,13 +56,12 @@ function handleAllCatagories(parsedData) {
 
   promptUser(questions).then(answer => {
     if (!answer) return;
-    handleSelectedCatagory(parsedData[answer.section])
+    handleSelectedCategory(parsedData[answer.section], date)
   });
 }
 
 function handleSelectedEvent(event) {
   const result = findMostRelevantDescription(event);
-  console.log(wrapAnsiText(result.extract, termWidth));
 
   const urlChoices = event.pages.map(page => ({
     name: page.titles.normalized + '\n',
@@ -81,7 +77,7 @@ function handleSelectedEvent(event) {
   const questions = [{
     type: 'list',
     name: 'url',
-    message: 'Read more about this event:\n',
+    message: 'Read more about this event:\n\n',
     choices: urlChoices,
     pageSize: pageSize,
     loop: false
@@ -89,7 +85,7 @@ function handleSelectedEvent(event) {
 
    promptUser(questions).then(answer => {
     if (answer.url === 'BACK') {
-      handleSelectedCatagory(sectionData); // Go back to the event selection
+      handleSelectedCategory(sectionData); // Go back to the event selection
     } else if (answer.url) {
       open(answer.url);
     }
@@ -97,4 +93,4 @@ function handleSelectedEvent(event) {
 
 }
 
-export { handleAllCatagories, handleSelectedCatagory, handleSelectedEvent };
+export { handleAllCategories, handleSelectedCategory, handleSelectedEvent };

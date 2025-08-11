@@ -1,14 +1,22 @@
 import wrapAnsi from 'wrap-ansi';
 
+// Capitalize first letter of a string
+// Used for categories
 function capitalizeFirstLetter(str) {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+// Helps to wrap text in the terminal
+// Used for events and descriptions of events
 function wrapAnsiText(text, width) {
   return wrapAnsi(text, width);
 }
 
+// Each event has an array of wiki pages related to that event
+// The most relevant wiki isn't at any particular index 
+// This function finds the most relevant wiki page by looking at the description/overview of each related page from the payload
+//  and compares it to the event description   
 function findMostRelevantDescription(event) { 
   const descriptionKeywords = event.text.toLowerCase().match(/\w+/g);
 
