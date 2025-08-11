@@ -4,11 +4,12 @@ This is a simple CLI program written in Node.js that utilizes Wikipedias "On thi
 
 Installation: 
     Clone the Repository:
-        git clone <repository-url>
-        cd <repository-folder>
+        git clone https://github.com/eyeaxamsterdam/on-this-day-wiki-for-cli
+        cd on-this-day-wiki-for-cli
 
 Install Dependencies and Link Globally:
-    npm install && npm link
+    npm install
+    npm link
 
 Usage: 
     Run the program with the command: otdih
