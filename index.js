@@ -3,7 +3,7 @@
 import { fetchOnThisDayData } from './api.js';
 
 process.on('SIGNINT', () => {
-    console.log('\nGoodbye!');
+    console.log('\nGoodbye!!!!');
     process.exit(0);
 });
 
