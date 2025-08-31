@@ -15,13 +15,19 @@ function fetchOnThisDayData() {
   let day = String(today.getDate()).padStart(2, '0');
   let url = `https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all/${month}/${day}`;
 
+  let options = {
+    headers: {
+      'User-Agent': 'deadbones/otdih 1.0'
+    }
+  }
+
   const args = process.argv.slice(2);
   let filterSection = Object.keys(filterOptions).find(option => args.includes(option));
   if (filterSection) {
       filterSection = filterOptions[filterSection];
   }
 
-  https.get(url, (res) => {
+  https.get(url, options, (res) => {
     let data = '';
 
     res.on('data', (chunk) => {
