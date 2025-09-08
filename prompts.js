@@ -44,7 +44,7 @@ function handleAllCatagories(parsedData) {
   const choices = Object.keys(parsedData)
     .filter(key => Array.isArray(parsedData[key]))
     .map(section => ({
-      name: capitalizeFirstLetter(section) + '\n',
+      name: section === 'selected' ? 'Selected Events\n' : capitalizeFirstLetter(section) + '\n',
       value: section
     }));
 
