@@ -22,7 +22,7 @@ function promptUser(questions) {
   process.exit(0);
 }); */
 
-function handleSelectedCatagory(sectionData) {
+function handleSelectedCategory(sectionData) {
   const selectedItems = sectionData.map(event => ({
     name: `${event.year ? event.year + ':' : ''} ${event.text.replace(/\n/g, ' ')}\n`,
     value: event
@@ -51,7 +51,7 @@ function handleAllCatagories(parsedData) {
   const questions = [{
     type: 'list',
     name: 'section',
-    message: 'Select a catagory:\n',
+    message: 'Select a category:\n',
     choices: choices,
     pageSize: pageSize,
     loop: false
@@ -59,7 +59,7 @@ function handleAllCatagories(parsedData) {
 
   promptUser(questions).then(answer => {
     if (!answer) return;
-    handleSelectedCatagory(parsedData[answer.section])
+    handleSelectedCategory(parsedData[answer.section])
   });
 }
 
@@ -89,7 +89,7 @@ function handleSelectedEvent(event) {
 
    promptUser(questions).then(answer => {
     if (answer.url === 'BACK') {
-      handleSelectedCatagory(sectionData); // Go back to the event selection
+      handleSelectedCategory(sectionData); // Go back to the event selection
     } else if (answer.url) {
       open(answer.url);
     }
@@ -97,4 +97,4 @@ function handleSelectedEvent(event) {
 
 }
 
-export { handleAllCatagories, handleSelectedCatagory, handleSelectedEvent };
+export { handleAllCatagories, handleSelectedCategory, handleSelectedEvent };

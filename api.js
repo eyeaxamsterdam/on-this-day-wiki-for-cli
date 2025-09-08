@@ -1,5 +1,5 @@
 import https from 'https';
-import { handleAllCatagories, handleSelectedCatagory } from './prompts.js';
+import { handleAllCatagories, handleSelectedCategory } from './prompts.js';
 
 const filterOptions = {
   '-births': 'births',  
@@ -39,7 +39,7 @@ function fetchOnThisDayData() {
         const parsedData = JSON.parse(data);
 
         if (filterSection && parsedData[filterSection]) {
-          handleSelectedCatagory(parsedData[filterSection]);
+          handleSelectedCategory(parsedData[filterSection]);
         } else {
           handleAllCatagories(parsedData);
         }
